@@ -11,8 +11,7 @@ Repository for the paper on Gradient Energy Matching (GEM).
 
 ## Abstract
 
-Distributed asynchronous SGD has become widely used for deep learning in large-scale systems, but remains notorious for its instability when increasing the number of workers. In this work, we study the dynamics of distributed asynchronous SGD under the lens of Lagrangian mechanics. Using this description, we introduce the concept of energy to describe the optimization process and derive a sufficient condition ensuring its stability as long as the collective energy induced by the active workers remains below the energy of a target synchronous process. Making use of this criterion, we derive a stable distributed asynchronous optimization procedure, GEM, that estimates and maintains the energy of the asynchronous system below or equal to the energy of sequential SGD with momentum.
-Experimental results highlight the stability and speedup of GEM compared to existing schemes, even when scaling to one hundred asynchronous workers. Results also indicate better generalization compared to the targeted SGD with momentum.
+Distributed asynchronous SGD has become widely used for deep learning in large-scale systems, but remains notorious for its instability when increasing the number of workers. In this work, we study the dynamics of distributed asynchronous SGD under the lens of Lagrangian mechanics. Using this description, we introduce the concept of energy to describe the optimization process and derive a sufficient condition ensuring its stability as long as the collective energy induced by the active workers remains below the energy of a target synchronous process. Making use of this criterion, we derive a stable distributed asynchronous optimization procedure, GEM, that estimates and maintains the energy of the asynchronous system below or equal to the energy of sequential SGD with momentum. Experimental results highlight the stability and speedup of GEM compared to existing schemes, even when scaling to one hundred asynchronous workers. Results also indicate better generalization compared to the targeted SGD with momentum.
 
 ## tl;dr
 
@@ -61,9 +60,9 @@ TODO
 
 ### torch.distributed.recv (without a specified rank) is unfair
 
-During our multi-machine experiments we identified an issue with PyTorch's torch.distributed.recv call when *not* specifying a rank. What was happening was that only workers with a lower rank (e.g., 1 - 5) committed to the parameter server, while other workers were idle. We pinpointed the issue to https://github.com/pytorch/pytorch/blob/master/torch/lib/THD/base/data_channels/DataChannelTCP.cpp#L573 which basically polls the worker sockets sequentially. As a result, the workers with lower ranks are prioritized which results in the fact that commits from other workers are ignored.
+During our multi-machine experiments we identified an issue with PyTorch's torch.distributed.recv call when *not* specifying a rank. What was happening was that workers with a lower rank (e.g., 1 - 5) committed to the parameter server, while other workers were idle. We pinpointed the issue to https://github.com/pytorch/pytorch/blob/master/torch/lib/THD/base/data_channels/DataChannelTCP.cpp#L573, which basically polls the worker sockets sequentially. As a result, workers with lower ranks are prioritized.
 
-We solved this issue by allocating a UDP socket at the parameter server https://github.com/montefiore-ai/gradient-energy-matching/blob/master/code/gem.py#L168 which listens for incoming messages from worker which completed their gradient computations. These messages are queued, and processed *fairly* by the parameter server.
+We solved this issue by allocating a UDP socket at the parameter server https://github.com/montefiore-ai/gradient-energy-matching/blob/master/code/gem.py#L168, which listens for incoming messages of workers which completed their gradient computations. These messages are queued, and processed *fairly* (FIFO) by the parameter server.
 
 ---
 
