@@ -52,3 +52,23 @@ Just run:
 ```shell
 sh train.sh [num-workers]
 ```
+
+## FAQ
+
+TODO
+
+## Known issues
+
+### torch.distributed.recv (without a specified rank) is unfair
+
+During our multi-machine experiments we identified an issue with PyTorch's torch.distributed.recv call when *not* specifying a rank. What was happening was that only the workers which have a lower rank (e.g., 1 - 5) where committing to the parameter server, while other workers were actually idle waiting to commit their gradients to the parameter servers. We pinpointed the issue to https://github.com/pytorch/pytorch/blob/master/torch/lib/THD/base/data_channels/DataChannelTCP.cpp#L573 which basically polls the worker sockets sequentially. As a result, the workers with lower ranks are prioritized which results in the fact that commits from other workers are ignored.
+
+We solved this issue by allocating a UDP socket at the parameter server https://github.com/montefiore-ai/gradient-energy-matching/blob/master/code/gem.py#L168 which listens for incoming messages from worker which completed their gradient computations. These messages are queued, and processed *fairly* by the parameter server.
+
+---
+
+Please cite us using the following BibTex entry:
+
+```
+TODO
+```
