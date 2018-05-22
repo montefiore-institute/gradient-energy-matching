@@ -2,7 +2,7 @@
 
 Repository for the paper on Gradient Energy Matching (GEM).
 
-<img alt="" src="resources/summary.png" width="100">
+<center><img alt="" src="resources/summary.png" width="400"></center>
 
 ![](resources/alexnet_pi_8.png)
 ![](resources/alexnet_pi_16.png)
