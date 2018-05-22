@@ -22,7 +22,9 @@ Experimental results highlight the stability and speedup of GEM compared to exis
 conda install pytorch torchvision -c pytorch
 ```
 
-### MNIST example
+### Want to try the code?
+
+Just run:
 
 ```shell
 sh train.sh [num-workers]
