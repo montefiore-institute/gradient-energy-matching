@@ -17,20 +17,25 @@ Experimental results highlight the stability and speedup of GEM compared to exis
 ## tl;dr
 
 1. We formulate stochastic gradient descent in the context of Lagrangian mechanics and derivea sufficient condition for ensuring the stability of a distributed asynchronous system.
+
 2. Building upon this framework, we propose a variant of distributed asynchronous SGD, GEM, that views the set of active workers as a whole and adjusts individual worker updates in order to match the dynamics of a target synchronous process.
+
 3. The target synchronous process in this work, i.e. the proxy, is regular momentum SGD.
+
 4. This allows us to define a *compliance* condition using the kinetic energy of the proxy and the central variable respectively:
-<p align="center">
-<img src="resources/compliance.gif">
-</p>
+   <p align="center">
+   <img src="resources/compliance.gif">
+   </p>
+
 5. For a worker to *match* the energy of the proxy, the individual contributions have to be rescaled:
-<p align="center">
-<img src="resources/compliance_worked_out.gif">
-</p>
+   <p align="center">
+   <img src="resources/compliance_worked_out.gif">
+   </p>
+
 6. Solving for the rescaling factor (pi) yields
-<p align="center">
-<img src="resources/pi_solved.gif">
-</p>
+   <p align="center">
+   <img src="resources/pi_solved.gif">
+   </p>
 
 ## Code
 
