@@ -1,6 +1,6 @@
 # Gradient Energy Matching
 
-Repository for the paper on Gradient Energy Matching (GEM).
+Repository for the paper on Gradient Energy Matching (GEM) http://arxiv.org/abs/1805.08469.
 
 <p align="center">
 <img alt="" src="resources/summary.png" width="400">
@@ -69,5 +69,14 @@ We solved this issue by allocating a UDP socket at the parameter server https://
 Please cite us using the following BibTex entry:
 
 ```
-TODO
+@article{hermans2018gem,
+    author = {{Hermans}, Joeri and {Louppe}, Gilles},
+    title = "{Gradient Energy Matching for Distributed Asynchronous Gradient Descent}",
+    journal = {ArXiv e-prints},
+    archivePrefix = "arXiv",
+    eprint = {1805.08469},
+    primaryClass = "cs.LG",
+    year = 2018,
+    month = may,
+}
 ```
