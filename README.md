@@ -1,6 +1,6 @@
 # Gradient Energy Matching
 
-Repository for 'Gradient Energy Matching for Distributed Asynchronous Gradient Descent', Joeri Hermans and Gilles Louppe, 2017, http://arxiv.org/abs/1805.08469.
+Repository for 'Gradient Energy Matching for Distributed Asynchronous Gradient Descent', Joeri Hermans and Gilles Louppe, 2018, http://arxiv.org/abs/1805.08469.
 
 <p align="center">
 <img alt="" src="resources/summary.png" width="400">
